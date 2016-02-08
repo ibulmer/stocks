@@ -1,5 +1,21 @@
 <ion-view view-title="Stocks">
   <ion-content class="padding">
-  {{test}}
+  <table>
+  <tr>
+    <td>
+    SYMB
+    </td>
+    <td>
+      Close
+    </td>
+    <td>
+      Change
+    </td>
+  <tr ng-repeat="(k,v) in test">
+    <td>{{k}}</td>
+    <td>{{v.close | number:2}}</td>
+    <td>{{v.change | number:2}}</td>
+  </tr>
+  </table>
   </ion-content>
 </ion-view>

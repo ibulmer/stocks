@@ -7,6 +7,9 @@ angular.module('starter.services', [])
       url: 'api/stocks/' + symbol,
     });
   }
+  return {
+    getOne: getOne,
+  }
 })
 
 .factory('Chats', function() {

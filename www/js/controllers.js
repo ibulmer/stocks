@@ -1,7 +1,48 @@
 angular.module('starter.controllers', [])
 
-.controller('StocksCtrl', function($scope) {
-  $scope.test = "hello sdfionic"
+// .controller('StocksCtrl', function($scope) {
+//   $scope.test = "hello sdfionic"
+// })
+
+.controller('StocksCtrl', function ($scope, stocks) {
+  $scope.test = {
+    AAPL:{
+      close:'no info',
+      change:'no info',
+    },
+    GOOG:{
+      close:'no info',
+      change:'no info',
+    },
+    YHOO:{
+      close:'no info',
+      change:'no info',
+    },
+    '^GSPC':{
+      close:'no info',
+      change:'no info',
+    },
+    MSFT:{
+      close:'no info',
+      change:'no info'
+    }
+
+  };
+  $scope.getInfo = function(symbol){
+    stocks.getOne(symbol).then(function(quotes){
+      console.log(quotes);
+      $scope.test[symbol].close = quotes.data[1].close;
+      $scope.test[symbol].change = quotes.data[1].close-quotes.data[0].close;
+    })
+  };
+  $scope.getAll = function(){
+    for (var key in $scope.test){
+      $scope.getInfo(key);
+    }
+    console.log('updated');
+  }
+  $scope.getAll();
+  setInterval($scope.getAll, 10000);
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {
