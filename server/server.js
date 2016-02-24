@@ -27,7 +27,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 //app.use('/api', apiRouter);
 require('./routes.js')(app, express);
 
-app.listen(3000, function(err){
-  console.log('stocks listening on 3000');
+var port = process.env.PORT || 3000;
+
+app.listen(port, function(err){
+  console.log('stocks listening on ', port);
 });
 
