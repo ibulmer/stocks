@@ -12,7 +12,7 @@
       Change
     </td>
   <tr ng-repeat="(k,v) in test">
-    <td><button ng-click = "changeGraph(k)">{{k}}</button></td>
+    <td><button class="button button-block button-calm" ng-click = "changeGraph(k)">{{k}}</button></td>
     <td>{{v.close | number:2}}</td>
     <td>{{v.change | number:2}}</td>
   </tr>
