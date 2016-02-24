@@ -12,10 +12,12 @@
       Change
     </td>
   <tr ng-repeat="(k,v) in test">
-    <td>{{k}}</td>
+    <td><button ng-click = "changeGraph(k)">{{k}}</button></td>
     <td>{{v.close | number:2}}</td>
     <td>{{v.change | number:2}}</td>
   </tr>
   </table>
+  <canvas id="buyers" width="600" height="400"></canvas>
   </ion-content>
 </ion-view>
+

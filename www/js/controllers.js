@@ -28,21 +28,71 @@ angular.module('starter.controllers', [])
     }
 
   };
+
+
   $scope.getInfo = function(symbol){
     stocks.getOne(symbol).then(function(quotes){
-      console.log(quotes);
+      //console.log(quotes);
       $scope.test[symbol].close = quotes.data[1].close;
       $scope.test[symbol].change = quotes.data[1].close-quotes.data[0].close;
+
+      // console.log("===========",$scope.buyerData.datasets[0].data);
+      // $scope.buyerData.datasets[0].datam.push(quotes.data[0].close);
+      // $scope.buyerData.datasets[0].datam.push(quotes.data[1].close);
     })
   };
-  $scope.getAll = function(){
+  var getAll = function(){
     for (var key in $scope.test){
       $scope.getInfo(key);
     }
     console.log('updated');
   }
-  $scope.getAll();
-  setInterval($scope.getAll, 10000);
+
+
+  $scope.buyerData = {
+  labels : [],
+  datasets : [
+    {
+      fillColor : "rgba(172,194,132,0.4)",
+      strokeColor : "#ACC26D",
+      pointColor : "#fff",
+      pointStrokeColor : "#9DB86D",
+      data : []
+    }
+  ]
+  }
+  getAll();
+
+  var currentSymbol = 'AAPL';
+
+  var updateChart = function(symbol){
+    console.log('updated');
+    stocks.getOne(symbol).then(function (quotes){
+      var buyers = document.getElementById('buyers').getContext('2d');
+      $scope.buyerData.labels = [];
+      $scope.buyerData.datasets[0].data = [];
+      for (var i=0; i<quotes.data.length; i++){
+        $scope.buyerData.labels.push(quotes.data[i].date.substring(0,7));
+        $scope.buyerData.datasets[0].data.push(quotes.data[i].close.toFixed(2));
+        console.log("quotes.data[i] ",quotes.data[i]);
+      }
+      //$scope.buyerData.datasets[0].data.push(quotes.data[0]);
+      //$scope.buyerData.datasets[0].data.push(quotes.data[1]);
+      new Chart(buyers).Line($scope.buyerData);
+
+    })
+  }
+
+  $scope.changeGraph = function(input){
+    currentSymbol = (input);
+    updateChart(currentSymbol);
+    console.log(currentSymbol);
+  }
+
+  updateChart(currentSymbol);
+  $scope.getAll;
+
+
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {
